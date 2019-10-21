@@ -12,6 +12,7 @@ namespace DevNet.Controllers
 {
     public class EmployeeController : Controller
     {
+
         readonly EmployeeContext context;
         public EmployeeController(EmployeeContext context)
         {
@@ -23,10 +24,17 @@ namespace DevNet.Controllers
             context.Dispose();
         }
 
-        public IActionResult JsonData(Employee employee)
+        public IActionResult GetJson()
         {
-            var json = JsonConvert.SerializeObject(employee);
-            return View(json);
+            return View();
+        }
+
+
+        [HttpGet]
+        public JsonResult GetempJson(Employee employee)
+        {
+            var result = JsonConvert.SerializeObject(employee);
+            return Json(result);
         }
 
         public IActionResult Index()
@@ -43,6 +51,7 @@ namespace DevNet.Controllers
             }
             return View(context.Employees.ToList());
         }
+
 
         #region --DETAILS   
         [HttpGet]
@@ -124,6 +133,7 @@ namespace DevNet.Controllers
             return View(employee);
         }
 
+
         [HttpPost]
         public async Task<IActionResult> Delete(Employee employee)
         {
@@ -135,7 +145,6 @@ namespace DevNet.Controllers
             context.Remove(employee);
             await context.SaveChangesAsync();
             return RedirectToAction("GetEmployeeList", "Employee");
-
         }
         #endregion
     }
