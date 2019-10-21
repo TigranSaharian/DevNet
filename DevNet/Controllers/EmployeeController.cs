@@ -23,6 +23,12 @@ namespace DevNet.Controllers
             context.Dispose();
         }
 
+        public IActionResult JsonData(Employee employee)
+        {
+            var json = JsonConvert.SerializeObject(employee);
+            return View(json);
+        }
+
         public IActionResult Index()
         {
             return View();
