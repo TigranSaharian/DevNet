@@ -27,39 +27,5 @@ namespace DevNet.Controllers
             return  context.Employees.ToList();
         }
 
-        // GET: api/EmpService/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST: api/EmpService
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT: api/EmpService/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            Employee employee = await context.Employees.FirstOrDefaultAsync(x => x.Id == id);
-
-            if (employee == null)
-            {
-                return NotFound();
-            }
-
-            context.Remove(employee);
-            await context.SaveChangesAsync();
-            return Ok(employee);
-        }
     }
 }
