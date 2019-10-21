@@ -1,0 +1,62 @@
+﻿@model DevNet.Models.Employee
+@{
+    ViewData["Title"] = "GetJson";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Get Json</h1>
+
+<input type="button" id="button" value="Get data via JQuery" class="btn btn-group btn-dark" />
+<input type="reset" id="reset" value="Reset table" class="btn btn-group btn-info" />
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Firstname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lastname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Age)
+            </th>
+        </tr>
+    </thead>
+    <tbody id="tbl"></tbody>
+</table>
+@section scripts{
+<script>
+    $(document).ready(function () {
+        $("#button").click(function () {
+            $.get("/api/EmpService/resource", function (data) {
+                $("#tbl").empty();
+                $.each(data, function (i, row) {
+                    $("#tbl").append("<tr><td>" +
+                        row["id"] + "</td><td>" +
+                        row["firstname"] + "</td><td>" +
+                        row["lastname"] + "</td><td>" +
+                        row["email"] + "</td><td>" +
+                        row["phone"] + "</td><td>" +
+                        row["age"] + "</td><td>" + 
+                        "</td><td><a href=/Employee/Edit/" + row["id"] + ">Edit </a> | " +
+                        "<a href=/Employee/Details/" + row["id"] + ">Details </a> | " +
+                        "<a href=/Employee/Delete/" + row["id"] + ">Delete </a></td></tr>");
+                })
+            })
+        });
+        $("#reset").click(function () {
+            $("#tbl").empty();
+        });
+    });
+</script>
+
+}
